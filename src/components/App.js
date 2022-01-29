@@ -1,11 +1,12 @@
 import React from "react";
 import {useState, useEffect} from "react";
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import api from "../utils/api";
 import Register from './Register';
 import Login from './Login';
 import InfoTooltip from './InfoTooltip';
 import ProtectedRoute from './ProtectedRoute';
+import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import PopupImage from "./PopupImage";
@@ -18,16 +19,22 @@ import {Spinner} from "./Spinner.js"
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false);
+    const [userData, setUserData] = useState({});
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
-    const [isDeletePopupOpen, setDeletePopupOpen] = React.useState(false);
+    const [isDeletePopupOpen, setDeletePopupOpen] = useState(false);
     const [selectedCard, setSelectedCard] = useState({});
     const [currentUser, setCurrentUser] = useState({});
     const [cards, setCards] = useState([]);
     const [cardId, setCardId] = React.useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
+    const history = useHistory();
 
+    useEffect(() => {
+        tokenCheck();
+    }, [loggedIn]);
     useEffect(() => {
         api
             .getUserInfo()
@@ -81,6 +88,17 @@ function App() {
     //     }
     // }
 
+    function tokenCheck() {
+
+    }
+
+    function handleLogin({email, password}) {
+
+    }
+
+    function handleRegister() {
+
+    }
 
     function handleUpdateUser(data) {
         api
@@ -146,7 +164,10 @@ function App() {
         <userContext.Provider value={currentUser}>
             <div className="page">
                 <div className="page__container">
-                    <Header/>
+                    <Header
+                        loggedIn={loggedIn}
+                        userData={userData}
+                    />
                     <Switch>
                         <ProtectedRoute
                             exact path="/"
@@ -154,7 +175,8 @@ function App() {
                         />
                         <Route path="/sign-in">
                             <Login
-
+                                name="login"
+                                onLogin={handleLogin}
                             />
                         </Route>
                         <Route path="/sign-up">
@@ -162,9 +184,9 @@ function App() {
 
                             />
                         </Route>
-                        <Route
+                        <Route>
                             {loggedIn ? <Redirect to="/"/> : <Redirect to="/sign-in"/>}
-                        />
+                        </Route>
                     </Switch>
                     <Main
                         cards={cards}
