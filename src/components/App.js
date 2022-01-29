@@ -1,7 +1,11 @@
 import React from "react";
 import {useState, useEffect} from "react";
+import { Switch, Route, Redirect } from 'react-router-dom';
 import api from "../utils/api";
-import Header from "./Header";
+import Register from './Register';
+import Login from './Login';
+import InfoTooltip from './InfoTooltip';
+import ProtectedRoute from './ProtectedRoute';
 import Main from "./Main";
 import Footer from "./Footer";
 import PopupImage from "./PopupImage";
@@ -13,6 +17,7 @@ import {userContext} from "../contexts/CurrentUserContext.js";
 import {Spinner} from "./Spinner.js"
 
 function App() {
+    const [loggedIn, setLoggedIn] = useState(false);
     const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
     const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
@@ -142,6 +147,25 @@ function App() {
             <div className="page">
                 <div className="page__container">
                     <Header/>
+                    <Switch>
+                        <ProtectedRoute
+                            exact path="/"
+
+                        />
+                        <Route path="/sign-in">
+                            <Login
+
+                            />
+                        </Route>
+                        <Route path="/sign-up">
+                            <Register
+
+                            />
+                        </Route>
+                        <Route
+                            {loggedIn ? <Redirect to="/"/> : <Redirect to="/sign-in"/>}
+                        />
+                    </Switch>
                     <Main
                         cards={cards}
                         onEditProfile={handleEditProfileClick}
@@ -175,6 +199,9 @@ function App() {
                         isOpen={isDeletePopupOpen}
                         onClose={closeAllPopups}
                         onDeleteCard={handleCardDelete}
+                    />
+                    <InfoTooltip
+
                     />
                 </div>
             </div>
