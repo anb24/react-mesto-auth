@@ -2,8 +2,9 @@ import React from "react";
 import {useState, useEffect} from "react";
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
 import api from "../utils/api";
-import Register from './Register';
+import * as auth from "../utils/auth";
 import Login from './Login';
+import Register from './Register';
 import InfoTooltip from './InfoTooltip';
 import ProtectedRoute from './ProtectedRoute';
 import Header from "./Header";
@@ -27,9 +28,11 @@ function App() {
     const [selectedCard, setSelectedCard] = useState({});
     const [currentUser, setCurrentUser] = useState({});
     const [cards, setCards] = useState([]);
-    const [cardId, setCardId] = React.useState(null);
+    const [cardId, setCardId] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
+    const [authState, setAuthState] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
     const history = useHistory();
 
     useEffect(() => {
@@ -96,8 +99,18 @@ function App() {
 
     }
 
-    function handleRegister() {
-
+    function handleRegister({ email, password }) {
+        setIsLoading(true);
+        return auth.register(email, password)
+            .then(() => {
+                history.push('/sign-in');
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                setIsLoading(false);
+            })
     }
 
     function handleUpdateUser(data) {
@@ -181,7 +194,8 @@ function App() {
                         </Route>
                         <Route path="/sign-up">
                             <Register
-
+                                name="register"
+                                onRegister={handleRegister}
                             />
                         </Route>
                         <Route>
@@ -223,7 +237,9 @@ function App() {
                         onDeleteCard={handleCardDelete}
                     />
                     <InfoTooltip
-
+                        isOpen={isInfoTooltipPopupOpen}
+                        onClose={closeAllPopups}
+                        isSuccess={isSuccess}
                     />
                 </div>
             </div>

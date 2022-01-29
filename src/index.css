@@ -68,3 +68,4 @@
 @import url(./blocks/popup/__close-icon/_type/popup__close-icon_type_close.css);
 @import url(./blocks/popup/__close-icon/_type/popup__close-icon_type_open.css);
 @import url(./blocks/register/register.css);
+@import url(./blocks/form/__input-error/_type/form__input-error_type_register.css);
