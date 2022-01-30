@@ -30,6 +30,7 @@ function Register({onRegister}) {
                     className="form__input form__input_type_sign"
                     placeholder="Email"
                     onChange={handleEmail}
+                    value={email}
                 />
             </label>
 
@@ -41,6 +42,7 @@ function Register({onRegister}) {
                     placeholder="Пароль"
                     autoComplete="none"
                     onChange={handlePassword}
+                    value={password}
                 />
             </label>
             <button

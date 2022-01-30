@@ -1,12 +1,22 @@
 export const BASE_URL = 'https://auth.nomoreparties.co';
 
+function _checkResponse(res) {
+    if(res.ok) {
+        return res.json()
+    }else {
+        return Promise.reject(`ОШИБКА: ${res.status}`);
+    }
+}
+
 export const register = (email, password) => {
+
     return fetch(`${BASE_URL}/signup`, {
         method: 'POST', headers: {
             'Content-Type': 'application/json',
         }, body: JSON.stringify({email, password})
     })
-        .then(res => res.ok ? res.json() : Promise.reject(`ОШИБКА: ${res.status}`))
+        .then(_checkResponse);
+        // .then(res => res.ok ? res.json() : Promise.reject(`ОШИБКА: ${res.status}`))
         // .then(res => {
         //     if (res.status === 400) {
         //         throw new Error('Некорректно заполнено одно из полей');
@@ -23,7 +33,8 @@ export const authorize = (email, password) => {
             'Content-Type': 'application/json',
         }, body: JSON.stringify({email, password})
     })
-        .then(res => res.ok ? res.json() : Promise.reject(`ОШИБКА: ${res.statusText}`))
+        .then(_checkResponse);
+        // .then(res => res.ok ? res.json() : Promise.reject(`ОШИБКА: ${res.statusText}`))
         // .then(res => {
         //     if (res.status === 200) {
         //         return;
@@ -44,7 +55,8 @@ export const getContent = (token) => {
             'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`
         },
     })
-        .then(res => res.ok ? res.json() : Promise.reject(`ОШИБКА: ${res.statusText}`))
+        .then(_checkResponse);
+        // .then(res => res.ok ? res.json() : Promise.reject(`ОШИБКА: ${res.statusText}`))
         // .then((res) => {
         //     if (res.status === 200) {
         //         return res.json();

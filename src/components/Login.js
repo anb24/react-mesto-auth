@@ -31,6 +31,7 @@ function Login({onLogin}) {
                     className="form__input form__input_type_sign"
                     placeholder="Email"
                     onChange={handleEmail}
+                    value={email}
                 />
             </label>
 
@@ -42,6 +43,7 @@ function Login({onLogin}) {
                     placeholder="Пароль"
                     autoComplete="none"
                     onChange={handlePassword}
+                    value={password}
                 />
             </label>
 
