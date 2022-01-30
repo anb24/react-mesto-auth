@@ -11,21 +11,25 @@ function Card({card, onCardClick, onCardDelete, onCardLike}) {
     function handleClick() {
         onCardClick(card);
     }
+
     function handleDeleteClick() {
         onCardDelete(card);
     }
+
     function handleLikeClick() {
         onCardLike(card);
     }
 
     return (<div id="card-template">
         <article className="element">
-            <button type="button" className={cardDeleteButtonClassName} aria-label="Удалить" onClick={handleDeleteClick}/>
+            <button type="button" className={cardDeleteButtonClassName} aria-label="Удалить"
+                    onClick={handleDeleteClick}/>
             <img src={`${card.link}`} className="element__image" alt={`${card.name}`} onClick={handleClick}/>
             <div className="element__group">
                 <h2 className="element__title">{card.name}</h2>
                 <div className="element__box-likes">
-                    <button type="button" className={cardLikeButtonClassName} aria-label="Нравится" onClick={handleLikeClick}/>
+                    <button type="button" className={cardLikeButtonClassName} aria-label="Нравится"
+                            onClick={handleLikeClick}/>
                     <p className="element__sum-likes">{card.likes.length}</p>
                 </div>
             </div>

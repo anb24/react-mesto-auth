@@ -6,11 +6,9 @@
     right: 60px;
     transform: rotate(180deg);
     display: none;
-    background-image: url(../../../../images/menu-button.svg);
 }
 
 .popup__close-icon_type_close:hover{
-    background-image: url(../../../../images/menu-button.svg);
 }
 
 @media screen and (max-width: 768px) {

@@ -1,62 +1,57 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, {useState} from "react";
+import {Link, withRouter} from "react-router-dom";
 
-function Register({ onRegister, name, isLoading, onAuthState }) {
 
-    function handleRegisterSubmit(e) {
-        e.preventDefault();
-        onRegister();
+function Register({onRegister}) {
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    function handleEmail(evt) {
+        setEmail(evt.target.value);
     }
 
-    return (
-        <main className="content">
-            <section className="register">
-                <h2 className="register__title">Регистрация</h2>
-                <form action="#"
-                      onSubmit={handleRegisterSubmit}
-                      className="form form_type_register"
-                      id={`${name}Form`}
-                      data-form={name}
-                      method="post"
-                      noValidate>
-                    <label className="form__label">
-                        <input className="form__input form__input_type_register"
-                               type="email"
-                               name="email"
-                               placeholder="Email"
-                               minLength="2"
-                               maxLength="40"
-                               required
-                               id="email-input"
+    function handlePassword(evt) {
+        setPassword(evt.target.value);
+    }
 
-                        />
-                        <span className="form__input-error form__input-error_type_register"></span>
-                    </label>
-                    <label className="form__label">
-                        <input className="form__input form__input_type_register"
-                               type="password"
-                               name="password"
-                               placeholder="Пароль"
-                               minLength="2"
-                               maxLength="40"
-                               required
-                               id="password-input"
-                        />
-                        <span className="form__input-error form__input-error_type_register"></span>
-                    </label>
-                    <input className="form__submit-button form__submit-button_type_register"
-                           type="submit"
-                           name="submit"
-                           value={`${isLoading ? 'Регистрация' : 'Зарегистрироваться'}`}
-                    />
-                </form>
-                <div className="register__signin">
-                    <p className="register__question">Уже зарегистрированы?</p>
-                    <Link to="/sign-in" className="register__login-link">Войти</Link>
-                </div>
-            </section>
-        </main>
-    );
+    function handleSubmit(evt) {
+        evt.preventDefault();
+        onRegister(email, password);
+    }
+
+    return (<section className="sign">
+        <h3 className="sign__title">Регистрация</h3>
+        <form className="form" onSubmit={handleSubmit}>
+            <label className="form__form-field">
+                <input
+                    type="email"
+                    name="email"
+                    className="form__input form__input_type_sign"
+                    placeholder="Email"
+                    onChange={handleEmail}
+                />
+            </label>
+
+            <label className="form__form-field">
+                <input
+                    name="password"
+                    type="password"
+                    className="form__input form__input_type_sign form__input_type_password"
+                    placeholder="Пароль"
+                    autoComplete="none"
+                    onChange={handlePassword}
+                />
+            </label>
+            <button
+                className="form__submit form__submit_type_sign">Зарегистрироваться
+            </button>
+        </form>
+        <span className="sign__reg-question">
+        Уже зарегистрированы?&nbsp;
+            <Link to="/sign-in" className="sign__link">Войти</Link>
+            </span>
+    </section>);
 }
 
-export default Register;
+export default withRouter(Register);

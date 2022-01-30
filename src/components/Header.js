@@ -1,14 +1,21 @@
-import React from "react";
 import logo from '../images/header/logo.svg';
-import NavBar from "./NavBar";
-import {Link} from 'react-router-dom';
+import NavBar from './NavBar';
+import {useLocation} from 'react-router-dom';
 
-function Header({loggedIn, authState}) {
+function Header(props) {
+    const location = useLocation();
     return (<header className="header">
-        <img src={logo} className="header__logo" alt='логотип Mesto Russia'/>
-        {!loggedIn && <Link to={authState ? "/sign-in" : "/sign-up"} className="header__link">
-            {authState ? "Войти" : "Регистрация"}
-        </Link>}
+
+        <a
+            href="./"
+            className="header__link"
+            target="_self">
+            <img src={logo} alt="Логотип" className="header__logo"/>
+        </a>
+        <NavBar
+            {...props}
+            location={location}
+        />
     </header>);
 }
 

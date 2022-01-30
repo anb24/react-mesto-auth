@@ -14,9 +14,11 @@ function PopupAddCard({isOpen, onClose, onAddPlace}) {
         e.preventDefault();
         onAddPlace({name, link});
     }
+
     function handleChangeName(evt) {
         setName(evt.target.value);
     }
+
     function handleChangeLink(evt) {
         setLink(evt.target.value);
     }

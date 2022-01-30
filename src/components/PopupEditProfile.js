@@ -15,14 +15,15 @@ function PopupEditProfile({isOpen, onClose, onUpdateUser}) {
     function handleChangeName(evt) {
         setName(evt.target.value);
     }
+
     function handleChangeDescription(evt) {
         setDescription(evt.target.value);
     }
+
     function handleSubmit(e) {
         e.preventDefault(); // Запрещаем браузеру переходить по адресу формы
         onUpdateUser({ // Передаём значения управляемых компонентов во внешний обработчик
-            name,
-            about: description,
+            name, about: description,
         });
     }
 
