@@ -47,7 +47,7 @@ function App() {
         tokenCheck();
         api.getUserInfo()
             .then(data => setCurrentUser(data))
-            .catch(err => console.log('#####Error: user data; ', err));
+            .catch(err => console.log('###Ошибка: данные пользователя ', err));
     }, []);
     useEffect(() => {
         if (isLoggedIn) {
